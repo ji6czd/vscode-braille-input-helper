@@ -1,0 +1,94 @@
+# 点字入力ヘルパー (Braille Input Helper)
+
+Braille Input Helperは、標準的なキーボードを使用して6点点字入力を可能にするVisual Studio Code拡張機能です。
+6つのキー（F, D, S, J, K, L）を点字の6つの点に見立て、同時押し（コード入力）することで点字文字を入力できます。
+
+## 機能
+
+*   **6点入力エミュレーション**: 以下のキー配置で点字入力を行います（パーキンスブレーラー等の標準的な配置を模しています）。
+    *   **F**: 1の点 (左手 人差し指)
+    *   **D**: 2の点 (左手 中指)
+    *   **S**: 3の点 (左手 薬指)
+    *   **J**: 4の点 (右手 人差し指)
+    *   **K**: 5の点 (右手 中指)
+    *   **L**: 6の点 (右手 薬指)
+*   **同時押し判定**: キーを押してから約100ミリ秒以内の入力をまとめて一つの文字として認識します（擬似的な同時押し）。
+*   **誤入力防止**: 点字入力モードがONの間は、上記の点字キー、スペースキー、Enterキーなどの空白文字以外、通常のキーボード入力をブロックします。
+
+## 使い方
+
+1.  **モードの切り替え**:
+    *   コマンドパレット (`Ctrl+Shift+P` または `Cmd+Shift+P`) を開き、`Toggle Braille Input Mode` を実行します。
+    *   または、ウィンドウ右下のステータスバーにある `Braille Mode: OFF` の表示をクリックします。
+2.  **入力**:
+    *   ステータスバーが `Braille Mode: ON`（オレンジ色）になっていることを確認します。
+    *   `f`, `d`, `s`, `j`, `k`, `l` キーを組み合わせて同時押しします。
+    *   例:
+        *   `f` のみ (1の点) -> ⠁
+        *   `f` + `d` (1-2の点) -> ⠃
+        *   `f` + `j` + `l` (1-4-6の点) -> ⠩
+3.  **モードの解除**:
+    *   もう一度ステータスバーをクリックするか、コマンドを実行すると通常の入力モードに戻ります。
+
+## 既知の問題
+
+*   VS Codeの仕様上、キーを離した瞬間（KeyUp）を正確に検知できないため、タイマーによる遅延判定を行っています。素早すぎる連続入力や、非常にゆっくりとした同時押しでは意図しない文字になる場合があります。
+
+## リリースノート
+
+### 0.0.1
+
+*   初期リリース
+*   基本的な6点入力機能の実装
+
+Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+
+For example:
+
+This extension contributes the following settings:
+
+* `myExtension.enable`: Enable/disable this extension.
+* `myExtension.thing`: Set to `blah` to do something.
+
+## Known Issues
+
+Calling out known issues can help limit users opening duplicate issues against your extension.
+
+## Release Notes
+
+Users appreciate release notes as you update your extension.
+
+### 1.0.0
+
+Initial release of ...
+
+### 1.0.1
+
+Fixed issue #.
+
+### 1.1.0
+
+Added features X, Y, and Z.
+
+---
+
+## Following extension guidelines
+
+Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
+
+* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
+
+## Working with Markdown
+
+You can author your README using Visual Studio Code. Here are some useful editor keyboard shortcuts:
+
+* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux).
+* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux).
+* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets.
+
+## For more information
+
+* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
+* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
+
+**Enjoy!**

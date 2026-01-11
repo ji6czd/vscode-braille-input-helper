@@ -1,0 +1,79 @@
+{
+  "name": "braille-input-helper",
+  "displayName": "Braille Input Helper",
+  "description": "Braille Input Helper is a Visual Studio Code extension that facilitates braille input for visually impaired developers, enhancing accessibility and coding efficiency.",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.107.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "repository": "https://github.com/ji6czd/vscode-braille-input-helper",
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "braille-input-helper.toggle",
+        "title": "Toggle Braille Input Mode"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "braille-input-helper.input",
+        "key": "f",
+        "when": "editorTextFocus && braille-input-helper.isActive",
+        "args": 1
+      },
+      {
+        "command": "braille-input-helper.input",
+        "key": "d",
+        "when": "editorTextFocus && braille-input-helper.isActive",
+        "args": 2
+      },
+      {
+        "command": "braille-input-helper.input",
+        "key": "s",
+        "when": "editorTextFocus && braille-input-helper.isActive",
+        "args": 4
+      },
+      {
+        "command": "braille-input-helper.input",
+        "key": "j",
+        "when": "editorTextFocus && braille-input-helper.isActive",
+        "args": 8
+      },
+      {
+        "command": "braille-input-helper.input",
+        "key": "k",
+        "when": "editorTextFocus && braille-input-helper.isActive",
+        "args": 16
+      },
+      {
+        "command": "braille-input-helper.input",
+        "key": "l",
+        "when": "editorTextFocus && braille-input-helper.isActive",
+        "args": 32
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "pnpm run compile && pnpm run lint",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.107.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "22.x",
+    "typescript-eslint": "^8.52.0",
+    "eslint": "^9.39.2",
+    "typescript": "^5.9.3",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2"
+  }
+}
