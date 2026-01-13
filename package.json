@@ -1,8 +1,9 @@
 {
   "name": "braille-input-helper",
   "displayName": "Braille Input Helper",
+  "publisher": "seiken-lab",
   "description": "Braille Input Helper is a Visual Studio Code extension that facilitates braille input for visually impaired developers, enhancing accessibility and coding efficiency.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "engines": {
     "vscode": "^1.107.0"
   },
