@@ -1,4 +1,7 @@
 import * as vscode from 'vscode';
+import * as path from 'path';
+import * as cp from 'child_process';
+
 
 export function activate(context: vscode.ExtensionContext) {
     // コントローラーの初期化
@@ -6,7 +9,7 @@ export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(brailleController);
 }
 
-export function deactivate() {}
+export function deactivate() { }
 
 /**
  * 点字入力を管理するコントローラークラス
@@ -16,7 +19,7 @@ class BrailleController {
     private statusBarItem: vscode.StatusBarItem;
     private currentChord: number = 0; // 現在押されている点のビット和
     private timer: NodeJS.Timeout | undefined;
-	private readonly TIMER_DELAY = 150; // 同時押し判定時間 (150ms)
+    private readonly TIMER_DELAY = 100; // 同時押し判定時間 (100ms)
 
     constructor(private context: vscode.ExtensionContext) {
         // ステータスバーアイテムの作成
@@ -55,6 +58,12 @@ class BrailleController {
         // setContextを使ってkeybindingsの有効/無効を制御
         vscode.commands.executeCommand('setContext', 'braille-input-helper.isActive', this.isActive);
         this.updateStatus();
+
+        if (this.isActive) {
+            this.playSound('on.wav');
+        } else {
+            this.playSound('off.wav');
+        }
     }
 
     /**
@@ -66,12 +75,40 @@ class BrailleController {
             this.statusBarItem.text = '$(circle-filled) Braille Mode: ON';
             this.statusBarItem.tooltip = 'Click to disable Braille Input';
             // モードON時は目立つ色に変更
-            this.statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground'); 
+            this.statusBarItem.backgroundColor = new vscode.ThemeColor('statusBarItem.warningBackground');
         } else {
             this.statusBarItem.text = '$(circle-outline) Braille Mode: OFF';
             this.statusBarItem.tooltip = 'Click to enable Braille Input';
             this.statusBarItem.backgroundColor = undefined; // デフォルト色
         }
+    }
+
+    private playSound(filename: string) {
+        const audioPath = this.context.asAbsolutePath(path.join('audio', filename));
+
+        let executable: string;
+        let args: string[] = [];
+
+        if (process.platform === 'win32') {
+            // Windows: VBScriptを使用
+            const vbsPath = this.context.asAbsolutePath(path.join('audio', 'play.vbs'));
+            executable = 'cscript';
+            args = ['//Nologo', vbsPath, audioPath];
+        } else if (process.platform === 'darwin') {
+            // macOS: afplayを使用
+            executable = 'afplay';
+            args = [audioPath];
+        } else {
+            // Linux: aplayを使用 (aplayがない場合もあるため注意が必要ですが一旦これで)
+            executable = 'aplay';
+            args = [audioPath];
+        }
+
+        cp.execFile(executable, args, (error, stdout, stderr) => {
+            if (error) {
+                console.error(`Error playing sound: ${error.message}`);
+            }
+        });
     }
 
     /**
