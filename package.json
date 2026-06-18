@@ -3,7 +3,7 @@
   "displayName": "Braille Input Helper",
   "publisher": "seiken-lab",
   "description": "Braille Input Helper is a tool to help you input Braille in VSCode.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "engines": {
     "vscode": "^1.107.0"
   },
@@ -56,6 +56,12 @@
         "key": "l",
         "when": "editorTextFocus && braille-input-helper.isActive",
         "args": 32
+      },
+      {
+        "command": "braille-input-helper.input",
+        "key": "space",
+        "when": "editorTextFocus && braille-input-helper.isActive",
+        "args": 256
       }
     ]
   },
@@ -68,13 +74,14 @@
     "test": "vscode-test"
   },
   "devDependencies": {
-    "@types/vscode": "^1.107.0",
     "@types/mocha": "^10.0.10",
-    "@types/node": "22.x",
-    "typescript-eslint": "^8.52.0",
+    "@types/node": "~22.19.5",
+    "@types/vscode": "^1.107.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.2",
     "eslint": "^9.39.2",
     "typescript": "^5.9.3",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
+    "typescript-eslint": "^8.52.0"
   }
 }
